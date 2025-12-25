@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Navidad 🎄</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(circle at top, #0b1d33, #020b18);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ❄️ NIEVE */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* 🎄 LUCES */
+.lights {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 5;
+}
+
+.light {
+  width: 14px;
+  height: 20px;
+  border-radius: 50%;
+  animation: blink 2s infinite alternate;
+}
+
+.light:nth-child(odd) { animation-delay: 1s; }
+
+@keyframes blink {
+  0% { opacity: .4; box-shadow: none; }
+  100% { opacity: 1; box-shadow: 0 0 15px currentColor; }
+}
+
+/* CONTENIDO */
+.main {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* BOTÓN */
+#magicButton {
+  padding: 26px 50px;
+  font-size: 1.5rem;
+  border-radius: 60px;
+  border: none;
+  background: linear-gradient(135deg, #ff3c6f, #ffb347);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(255, 180, 120, 1);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* MENSAJES */
+.message {
+  display: none;
+  max-width: 90%;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255,255,255,.9);
+  animation: fadeIn 2s ease forwards;
+}
+
+.fadeOut {
+  animation: fadeOut 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+/* MENSAJE FINAL */
+.final {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.3rem;
+  color: #ffe0ec;
+  text-shadow: 0 0 25px rgba(255,180,220,.9);
+}
+
+/* 🎅 SANTA */
+#santa {
+  position: fixed;
+  top: 18%;
+  left: -500px;
+  width: 420px;
+  z-index: 4;
+  display: none;
+  animation: santaFly 6s ease-in-out forwards;
+}
+
+@keyframes santaFly {
+  0% { left: -500px; }
+  50% { left: 50%; transform: translateX(-50%) scale(1.05); }
+  100% { left: 120%; }
+}
+
+/* PARTÍCULAS */
+.particle {
+  position: absolute;
+  font-size: 28px;
+  animation: explode 1.4s ease-out forwards;
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y)) scale(0);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎄 LUCES -->
+<div class="lights">
+  <div class="light" style="color:red;background:red"></div>
+  <div class="light" style="color:yellow;background:yellow"></div>
+  <div class="light" style="color:lime;background:lime"></div>
+  <div class="light" style="color:cyan;background:cyan"></div>
+  <div class="light" style="color:orange;background:orange"></div>
+</div>
+
+<canvas id="snow"></canvas>
+
+<div class="main">
+  <button id="magicButton">jojojo 🎅</button>
+
+  <div id="msg1" class="message">
+    Ten una hermosa noche y llena de muchos momentos lindos &lt;33.<br>
+    Ya sea con tu familia o haciendo lo que más te gusta (jugar),<br>
+    solo quiero que sepas que me gusta verte feliz<br>
+    y me pongo nervioso cuando recibo un mensaje tuyo.
+  </div>
+
+  <div id="msg2" class="message">
+    Feliz navidad pao &lt;3
+  </div>
+
+  <div id="msg3" class="message final">
+    Eres muy hermosa, no lo olvides nunca,<br>
+    mereces muchas cosas bonitas &lt;33
+  </div>
+</div>
+
+<!-- 🎅 SANTA -->
+<svg id="santa" viewBox="0 0 600 200">
+  <g fill="#8b5a2b">
+    <ellipse cx="100" cy="120" rx="30" ry="20"/>
+    <ellipse cx="170" cy="120" rx="30" ry="20"/>
+    <ellipse cx="240" cy="120" rx="30" ry="20"/>
+  </g>
+
+  <rect x="300" y="110" width="170" height="40" rx="20" fill="#c0392b"/>
+  <rect x="330" y="80" width="90" height="40" rx="20" fill="#e74c3c"/>
+
+  <circle cx="380" cy="65" r="20" fill="#f5cba7"/>
+  <rect x="360" y="90" width="40" height="40" rx="10" fill="#e74c3c"/>
+
+  <rect x="400" y="95" width="35" height="10" rx="5" fill="#f5cba7">
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      from="0 400 95"
+      to="20 400 95"
+      dur="0.6s"
+      repeatCount="indefinite"/>
+  </rect>
+</svg>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/12/14/audio_2c4a62b0a1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ❄️ NIEVE
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+let w, h;
+const flakes = [];
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+resize();
+window.onresize = resize;
+
+for (let i = 0; i < 160; i++) {
+  flakes.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*3+1, d: Math.random()+1 });
+}
+
+function snow() {
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = "rgba(255,255,255,0.9)";
+  flakes.forEach(f => {
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+    ctx.fill();
+    f.y += f.d;
+    if (f.y > h) { f.y = -5; f.x = Math.random()*w; }
+  });
+  requestAnimationFrame(snow);
+}
+snow();
+
+// 🎇 BOTÓN
+const btn = document.getElementById("magicButton");
+const music = document.getElementById("music");
+
+btn.onclick = e => {
+  music.play();
+  btn.style.display = "none";
+
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.textContent = Math.random() > .5 ? "⭐" : "🎄";
+    p.style.left = e.clientX + "px";
+    p.style.top = e.clientY + "px";
+    p.style.setProperty("--x", `${(Math.random()-0.5)*400}px`);
+    p.style.setProperty("--y", `${(Math.random()-0.5)*400}px`);
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1400);
+  }
+
+  santa.style.display = "block";
+
+  setTimeout(() => msg1.style.display = "block", 1500);
+
+  // Mensaje 1 → 7s
+  setTimeout(() => {
+    msg1.classList.add("fadeOut");
+    setTimeout(() => {
+      msg1.style.display = "none";
+      msg2.style.display = "block";
+    }, 2000);
+  }, 8500);
+
+  // Mensaje 2 → 4s
+  setTimeout(() => {
+    msg2.classList.add("fadeOut");
+    setTimeout(() => {
+      msg2.style.display = "none";
+      msg3.style.display = "block";
+    }, 2000);
+  }, 13500);
+};
+</script>
+
+</body>
+</html>
+
